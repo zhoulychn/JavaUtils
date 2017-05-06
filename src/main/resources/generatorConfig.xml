@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <properties resource="jdbc.properties"/>
+
+    <context id="anchor">
+
+        <!-- 插件介绍地址 http://mbg.cndocs.tk/reference/plugins.html-->
+        <!--<plugin type="org.mybatis.generator.plugins.CachePlugin"/>-->
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="${jdbc.driverPath}" connectionURL="${jdbc.url}" userId="${jdbc.username}"
+                        password="${jdbc.password}"/>
+
+        <javaModelGenerator targetPackage="bean.entity" targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="dao.base" targetProject="src/main/java"/>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="dao.base" targetProject="src/main/java"/>
+
+        <table tableName="anchor" domainObjectName="AnchorBase" alias="anchor">
+        </table>
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+
+    <!--扫描配置的bean-->
+    <context:component-scan base-package="common.bean"/>
+
+    <!--扫描service-->
+    <context:component-scan base-package="service"/>
+
+    <!--扫描定时器-->
+    <context:component-scan base-package="scheduler"/>
+
+    <!--注解切面-->
+    <aop:aspectj-autoproxy/>
+
+    <!--调度，后台任务，异步方法-->
+    <task:annotation-driven/>
+
+    <!--定时器-->
+    <task:scheduler id="myScheduler" pool-size="5"/>
+
+    <!-- cacheManager工厂类，指定ehcache.xml的位置 -->
+    <bean id="ehcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
+    <!-- 声明cacheManager -->
+    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcacheManagerFactory"/>
+    </bean>
+
+    <!--缓存框架-->
+    <cache:annotation-driven cache-manager="ehcacheManager"/>
+
+    <!-- druid配置 -->
+    <import resource="spring-database.xml"/>
+
+    <!-- mybatis -->
+    <import resource="spring-mybatis.xml"/>
+</beans>
