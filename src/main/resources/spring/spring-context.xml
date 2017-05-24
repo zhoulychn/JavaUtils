@@ -49,7 +49,4 @@
 
     <!-- druid配置 -->
     <import resource="spring-database.xml"/>
-
-    <!-- mybatis -->
-    <import resource="spring-mybatis.xml"/>
 </beans>
