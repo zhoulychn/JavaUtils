@@ -1,13 +1,11 @@
 package com.zhoulychn.controller;
 
-import com.zhoulychn.bean.entity.AnchorBase;
-import com.zhoulychn.service.TestService;
+import com.zhoulychn.entity.UserEntity;
+import com.zhoulychn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -24,23 +22,21 @@ public class TestController {
     private final AtomicLong count = new AtomicLong(0);
 
     @Autowired
-    private TestService testService;
+    private UserService userService;
 
     @RequestMapping("/query")
     public String query(Model model, HttpServletRequest request) {
-        WebApplicationContext webContext = ContextLoader.getCurrentWebApplicationContext();
-        AnchorBase userBase = testService.selectById("https://www.douyu.com/10");
-        model.addAttribute("user", userBase);
+        UserEntity entity = userService.selectById(1);
+        model.addAttribute("user", entity);
         System.out.println(new Date());
         return "/test";
     }
 
     @RequestMapping("/update")
     public String update(Model model) {
-        AnchorBase userBase = testService.selectById("https://www.douyu.com/10");
-        userBase.setState("0");
-        testService.update(userBase);
-        model.addAttribute("user", userBase);
+        UserEntity entity = userService.selectById(1);
+        userService.update(entity);
+        model.addAttribute("user", entity);
         System.out.println(new Date());
         return "/test";
     }
@@ -48,12 +44,12 @@ public class TestController {
     @RequestMapping("/transaction")
     public String transaction(Model model) {
         try {
-            testService.transactionCase();
+            userService.transactionCase();
         } catch (Exception e) {
             System.out.println("------------------异常-------------------");
         }
-        AnchorBase userBase = testService.selectById("https://www.douyu.com/10");
-        model.addAttribute("user", userBase);
+        UserEntity entity = userService.selectById(1);
+        model.addAttribute("user", entity);
         return "/test";
     }
 }

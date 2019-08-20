@@ -1,9 +1,9 @@
 package com.zhoulychn.service.impl;
 
-import com.zhoulychn.bean.entity.AnchorBase;
-import com.zhoulychn.bean.entity.AnchorBaseExample;
-import com.zhoulychn.dao.base.AnchorBaseMapper;
-import com.zhoulychn.service.TestService;
+import com.zhoulychn.dao.UserDAO;
+import com.zhoulychn.entity.UserEntity;
+import com.zhoulychn.entity.UserEntityExample;
+import com.zhoulychn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,39 +19,39 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
-public class TestServiceImpl implements TestService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private AnchorBaseMapper anchorBaseMapper;
+    private UserDAO userDAO;
 
     @Override
     @Cacheable(value = "myCache", key = "#id")
-    public AnchorBase selectById(String id) {
-        return anchorBaseMapper.selectByPrimaryKey(id);
+    public UserEntity selectById(Integer id) {
+        return userDAO.selectByPrimaryKey(id);
     }
 
 
     @Override
-    public int deleteById(String id) {
+    public int deleteById(Integer id) {
         return 0;
     }
 
     @Override
 
-    public int insert(AnchorBase base) {
-        return anchorBaseMapper.insert(base);
+    public int insert(UserEntity base) {
+        return userDAO.insert(base);
     }
 
     @Override
     @CacheEvict(value = "myCache", key = "#base.url")
-    public int update(AnchorBase base) {
-        return anchorBaseMapper.updateByPrimaryKey(base);
+    public int update(UserEntity base) {
+        return userDAO.updateByPrimaryKey(base);
     }
 
     @Override
     @Cacheable(value = "myCache", key = "0")
     public int count() {
-        return (int)anchorBaseMapper.countByExample(new AnchorBaseExample());
+        return (int) userDAO.countByExample(new UserEntityExample());
     }
 
     @Override
@@ -68,8 +68,7 @@ public class TestServiceImpl implements TestService {
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ, propagation = Propagation.REQUIRED)
     public void transactionCase() {
-        AnchorBase anchorBase = anchorBaseMapper.selectByPrimaryKey("https://www.douyu.com/10");
-        anchorBase.setUrl("--------------------------");
-        anchorBaseMapper.insert(anchorBase);
+        UserEntity anchorBase = userDAO.selectByPrimaryKey(1);
+        userDAO.insert(anchorBase);
     }
 }
