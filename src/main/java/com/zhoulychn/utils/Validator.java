@@ -1,4 +1,4 @@
-package com.zhoulychn.common.utils;
+package com.zhoulychn.utils;
 
 import java.lang.reflect.Array;
 import java.util.Collection;

@@ -16,36 +16,14 @@
         http://www.springframework.org/schema/cache
         http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-
-    <!--扫描配置的bean-->
-    <context:component-scan base-package="common.bean"/>
-
     <!--扫描service-->
-    <context:component-scan base-package="service"/>
-
-    <!--扫描定时器-->
-    <context:component-scan base-package="scheduler"/>
+    <context:component-scan base-package="com.zhoulychn.service"/>
 
     <!--注解切面-->
     <aop:aspectj-autoproxy/>
 
     <!--调度，后台任务，异步方法-->
     <task:annotation-driven/>
-
-    <!--定时器-->
-    <task:scheduler id="myScheduler" pool-size="5"/>
-
-    <!-- cacheManager工厂类，指定ehcache.xml的位置 -->
-    <bean id="ehcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="classpath:ehcache.xml"/>
-    </bean>
-    <!-- 声明cacheManager -->
-    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-        <property name="cacheManager" ref="ehcacheManagerFactory"/>
-    </bean>
-
-    <!--缓存框架-->
-    <cache:annotation-driven cache-manager="ehcacheManager"/>
 
     <!-- druid配置 -->
     <import resource="spring-database.xml"/>

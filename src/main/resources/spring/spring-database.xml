@@ -17,8 +17,10 @@
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driverPath}" />
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
+
 
         <!-- 配置初始化大小、最小、最大 -->
         <property name="initialSize" value="${jdbc.initialSize}"/>
@@ -45,11 +47,11 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath*:com/zhoulychn/dao/*/*.xml"/>
+        <property name="mapperLocations" value="classpath*:com/zhoulychn/dao/*.xml"/>
     </bean>
     <!-- 采用扫描方式 多个路径可以逗号或分号间隔 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="dao.base,dao.custom"/>
+        <property name="basePackage" value="com.zhoulychn.dao"/>
         <!-- 当有多个数据源时需要注意下面的配置 -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
