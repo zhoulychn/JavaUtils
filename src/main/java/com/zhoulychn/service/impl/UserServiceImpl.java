@@ -25,11 +25,9 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Override
-    @Cacheable(value = "myCache", key = "#id")
     public UserEntity selectById(Integer id) {
         return userDAO.selectByPrimaryKey(id);
     }
-
 
     @Override
     public int deleteById(Integer id) {
@@ -37,19 +35,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-
     public int insert(UserEntity base) {
         return userDAO.insert(base);
     }
 
     @Override
-    @CacheEvict(value = "myCache", key = "#base.url")
     public int update(UserEntity base) {
         return userDAO.updateByPrimaryKey(base);
     }
 
     @Override
-    @Cacheable(value = "myCache", key = "0")
     public int count() {
         return (int) userDAO.countByExample(new UserEntityExample());
     }
