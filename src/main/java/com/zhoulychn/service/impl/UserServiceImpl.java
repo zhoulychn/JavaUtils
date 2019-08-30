@@ -4,6 +4,7 @@ import com.zhoulychn.dao.UserDAO;
 import com.zhoulychn.entity.UserEntity;
 import com.zhoulychn.entity.UserEntityExample;
 import com.zhoulychn.service.UserService;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -36,7 +38,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(UserEntity base) {
-        return userDAO.insert(base);
+        int insert = userDAO.insert(base);
+        int i = 10 / 0;
+        return insert;
     }
 
     @Override
